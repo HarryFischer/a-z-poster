@@ -1,76 +1,170 @@
 <script lang="ts">
-	import { posterStore, totalPrice, isReadyToOrder } from '$lib/stores/posterStore';
-	import PosterCanvas from '$lib/components/PosterCanvas.svelte';
-	import ControlPanel from '$lib/components/ControlPanel.svelte';
+	import { getPreviewUrl } from '$lib/posters.js';
+	import type { PageData } from './$types.js';
+
+	let { data }: { data: PageData } = $props();
+
+	function formatPrice(pence: number, currency: string): string {
+		return new Intl.NumberFormat('en-GB', {
+			style: 'currency',
+			currency: currency.toUpperCase(),
+			minimumFractionDigits: 0
+		}).format(pence / 100);
+	}
 </script>
 
-<div class="app">
-	<div class="canvas-area">
-		<div class="topbar">
-			<span class="topbar-logo">Letterform</span>
-			<span class="topbar-step">Design your poster</span>
-		</div>
-		<PosterCanvas posterState={$posterStore} />
-	</div>
+<svelte:head>
+	<title>Letterform — Typographic Poster Shop</title>
+</svelte:head>
 
-	<div class="panel-wrap">
-		<ControlPanel posterState={$posterStore} totalPrice={$totalPrice} isReadyToOrder={$isReadyToOrder} />
-	</div>
+<div class="page">
+	<header class="hero">
+		<h1>Typographic posters, <em>made to order.</em></h1>
+		<p>Choose your design, pick your letter — printed and shipped to your door.</p>
+	</header>
+
+	<section class="grid">
+		{#each data.designs as design}
+			<article class="card">
+				<a href="/design/{design.id}" class="card-image-link">
+					<div class="card-image">
+						<img
+							src={getPreviewUrl(design.id, 'A')}
+							alt="{design.name} — Letter A preview"
+							loading="lazy"
+						/>
+					</div>
+				</a>
+				<div class="card-body">
+					<div class="card-meta">
+						<span class="label">{design.paperSize}</span>
+						<span class="label">{design.technique}</span>
+					</div>
+					<h2 class="card-name">{design.name}</h2>
+					<div class="card-footer">
+						<span class="price">{formatPrice(design.price, design.currency)}</span>
+						<a href="/design/{design.id}" class="btn-personalise">Personalise</a>
+					</div>
+				</div>
+			</article>
+		{/each}
+	</section>
 </div>
 
 <style>
-	:global(*, *::before, *::after) {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
+	.page {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 48px 24px 80px;
 	}
 
-	:global(body) {
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-		background: #efefeb;
-		color: #1a1a1a;
-		min-height: 100vh;
+	.hero {
+		margin-bottom: 48px;
 	}
 
-	.app {
+	.hero h1 {
+		font-size: clamp(28px, 4vw, 44px);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+		margin-bottom: 12px;
+	}
+
+	.hero h1 em {
+		font-style: italic;
+		font-weight: 400;
+	}
+
+	.hero p {
+		font-size: 16px;
+		color: var(--text-secondary);
+	}
+
+	.grid {
 		display: grid;
-		grid-template-columns: 1fr 360px;
-		height: 100vh;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 24px;
+	}
+
+	.card {
+		border: 0.5px solid var(--border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		background: var(--bg);
+		transition: border-color 0.15s;
+	}
+
+	.card:hover {
+		border-color: rgba(0, 0, 0, 0.25);
+	}
+
+	.card-image-link {
+		display: block;
+	}
+
+	.card-image {
+		aspect-ratio: 3 / 4;
+		background: var(--bg-tertiary);
 		overflow: hidden;
 	}
 
-	.canvas-area {
+	.card-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.card-body {
+		padding: 16px;
+	}
+
+	.card-meta {
 		display: flex;
-		flex-direction: column;
-		background: #f7f7f5;
-		overflow: hidden;
+		gap: 6px;
+		margin-bottom: 8px;
 	}
 
-	.topbar {
+	.label {
+		font-size: 11px;
+		color: var(--text-secondary);
+		background: var(--bg-secondary);
+		border: 0.5px solid var(--border);
+		border-radius: 4px;
+		padding: 2px 8px;
+		letter-spacing: 0.04em;
+	}
+
+	.card-name {
+		font-size: 16px;
+		font-weight: 600;
+		margin-bottom: 14px;
+	}
+
+	.card-footer {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10px 16px;
-		background: #fff;
-		border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
-		flex-shrink: 0;
 	}
 
-	.topbar-logo {
-		font-size: 13px;
+	.price {
+		font-size: 18px;
 		font-weight: 600;
-		letter-spacing: 0.1em;
 	}
 
-	.topbar-step {
-		font-size: 12px;
-		color: #6b6b6b;
+	.btn-personalise {
+		padding: 8px 16px;
+		border: 0.5px solid var(--border-active);
+		border-radius: var(--radius);
+		font-size: 13px;
+		font-weight: 500;
+		background: transparent;
+		color: var(--text);
+		transition: background 0.15s, color 0.15s;
 	}
 
-	.panel-wrap {
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
+	.btn-personalise:hover {
+		background: var(--text);
+		color: var(--bg);
 	}
 </style>

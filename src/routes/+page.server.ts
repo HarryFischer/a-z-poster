@@ -1,5 +1,7 @@
-import type { PageServerLoad } from './$types';
+import { getAllDesigns } from '$lib/posters.server.js';
+import type { PageServerLoad } from './$types.js';
 
 export const load: PageServerLoad = async () => {
-	return {};
+	const designs = getAllDesigns();
+	return { designs };
 };

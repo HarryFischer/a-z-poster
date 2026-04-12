@@ -1,0 +1,11 @@
+{
+  "id": "design-01",
+  "name": "Series One",
+  "description": "A bold, considered typographic poster. Each letter hand-set within a precise grid.",
+  "paperSize": "A2",
+  "technique": "Giclée",
+  "price": 4500,
+  "currency": "gbp",
+  "gelatoProductUid": "poster_210x297_ver_4-0",
+  "available": true
+}
