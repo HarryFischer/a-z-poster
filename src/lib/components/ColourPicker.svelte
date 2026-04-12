@@ -1,10 +1,24 @@
 <script lang="ts">
-	import { posterStore } from '$lib/stores/posterStore';
+	import { posterStore } from "$lib/stores/posterStore";
 
 	let { bg, fg }: { bg: string; fg: string } = $props();
 
-	const bgSwatches = ['#F5F0E8', '#1a1a1a', '#E8EDF5', '#F5E8E8', '#E8F5EE', '#2C2035'];
-	const fgSwatches = ['#1a1a1a', '#F5F0E8', '#C1440E', '#1D5CA6', '#2E7D4F', '#C4A44A'];
+	const bgSwatches = [
+		"#F5F0E8",
+		"#1a1a1a",
+		"#E8EDF5",
+		"#F5E8E8",
+		"#E8F5EE",
+		"#2C2035",
+	];
+	const fgSwatches = [
+		"#1a1a1a",
+		"#F5F0E8",
+		"#C1440E",
+		"#1D5CA6",
+		"#2E7D4F",
+		"#C4A44A",
+	];
 
 	function setBg(color: string) {
 		posterStore.update((s) => ({ ...s, bg: color }));
@@ -15,6 +29,7 @@
 	}
 </script>
 
+<!--  -->
 <div class="color-row">
 	<div class="color-group">
 		<span class="group-label">Background</span>
@@ -23,7 +38,9 @@
 				<button
 					class="swatch"
 					class:active={bg === color}
-					style="background:{color};{bg === color ? 'border-color:' + fg + ';' : ''}"
+					style="background:{color};{bg === color
+						? 'border-color:' + fg + ';'
+						: ''}"
 					onclick={() => setBg(color)}
 					aria-label="Background {color}"
 				></button>
@@ -37,7 +54,9 @@
 				<button
 					class="swatch"
 					class:active={fg === color}
-					style="background:{color};{fg === color ? 'border-color:' + bg + ';' : ''}"
+					style="background:{color};{fg === color
+						? 'border-color:' + bg + ';'
+						: ''}"
 					onclick={() => setFg(color)}
 					aria-label="Foreground {color}"
 				></button>
