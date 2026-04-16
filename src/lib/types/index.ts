@@ -8,6 +8,7 @@ export interface Design {
 	currency: string;
 	gelatoProductUid: string;
 	available: boolean;
+	previewLetter: string;
 }
 
 export interface ShippingAddress {

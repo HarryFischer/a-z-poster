@@ -1,12 +1,12 @@
 <script lang="ts">
-	import '../app.css';
-	import type { Snippet } from 'svelte';
+	import "../app.css";
+	import type { Snippet } from "svelte";
 
 	let { children }: { children: Snippet } = $props();
 </script>
 
 <nav class="topbar">
-	<a href="/" class="logo">Letterform</a>
+	<a href="/" class="logo">A to Z Posters</a>
 	<a href="/" class="nav-link">Shop</a>
 </nav>
 

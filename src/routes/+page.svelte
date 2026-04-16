@@ -29,7 +29,7 @@
 				<a href="/design/{design.id}" class="card-image-link">
 					<div class="card-image">
 						<img
-							src={getPreviewUrl(design.id, 'A')}
+							src={getPreviewUrl(design.id, design.previewLetter)}
 							alt="{design.name} — Letter A preview"
 							loading="lazy"
 						/>

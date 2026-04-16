@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { getPreviewUrl } from '$lib/posters.js';
-	import { setItem } from '$lib/stores/cartStore.js';
-	import type { PageData } from './$types.js';
+	import { goto } from "$app/navigation";
+	import { getPreviewUrl } from "$lib/posters.js";
+	import { setItem } from "$lib/stores/cartStore.js";
+	import type { PageData } from "./$types.js";
 
 	let { data }: { data: PageData } = $props();
 
-	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-	let selectedLetter = $state('A');
+	let selectedLetter = $state("A");
 
 	function selectLetter(l: string) {
 		selectedLetter = l;
@@ -16,14 +16,14 @@
 
 	function addToBasket() {
 		setItem(data.design, selectedLetter);
-		goto('/checkout');
+		goto("/checkout");
 	}
 
 	function formatPrice(pence: number, currency: string): string {
-		return new Intl.NumberFormat('en-GB', {
-			style: 'currency',
+		return new Intl.NumberFormat("en-GB", {
+			style: "currency",
 			currency: currency.toUpperCase(),
-			minimumFractionDigits: 0
+			minimumFractionDigits: 0,
 		}).format(pence / 100);
 	}
 
@@ -49,7 +49,6 @@
 	<!-- Right: control panel -->
 	<div class="panel">
 		<div class="panel-inner">
-
 			<!-- YOUR LETTER -->
 			<section>
 				<div class="section-label">Your letter</div>
@@ -94,14 +93,15 @@
 					<span class="info-value">{data.design.technique}</span>
 				</div>
 			</section>
-
 		</div>
 
 		<!-- Sticky footer -->
 		<div class="panel-footer">
 			<div class="price-row">
 				<span class="price-label">Total</span>
-				<span class="price-val">{formatPrice(data.design.price, data.design.currency)}</span>
+				<span class="price-val"
+					>{formatPrice(data.design.price, data.design.currency)}</span
+				>
 			</div>
 			<button class="btn-basket" onclick={addToBasket}>
 				Add to basket — Letter {selectedLetter}
@@ -136,7 +136,7 @@
 	.preview-image {
 		width: 100%;
 		aspect-ratio: 1 / 1.414;
-		object-fit: contain;
+		object-fit: cover;
 		display: block;
 		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 		background: var(--bg);
@@ -191,7 +191,9 @@
 		background: transparent;
 		border: 0.5px solid var(--border);
 		border-radius: var(--radius);
-		transition: border-color 0.12s, background 0.12s;
+		transition:
+			border-color 0.12s,
+			background 0.12s;
 	}
 
 	.letter-btn:hover {

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { getPreviewUrl } from '$lib/posters.js';
-	import { clearItem } from '$lib/stores/cartStore.js';
-	import { onMount } from 'svelte';
+	import { page } from "$app/state";
+	import { getPreviewUrl } from "$lib/posters.js";
+	import { clearItem } from "$lib/stores/cartStore.js";
+	import { onMount } from "svelte";
 
-	const letter = $derived(page.url.searchParams.get('letter') ?? 'A');
-	const designId = $derived(page.url.searchParams.get('design') ?? 'design-01');
+	const letter = $derived(page.url.searchParams.get("letter") ?? "A");
+	const designId = $derived(page.url.searchParams.get("design") ?? "design-01");
 	const previewUrl = $derived(getPreviewUrl(designId, letter));
 
 	onMount(() => {
@@ -27,8 +27,8 @@
 			<p class="eyebrow">Order confirmed</p>
 			<h1>Your poster is on its way.</h1>
 			<p class="body-text">
-				You'll receive an email confirmation shortly. Your poster will be printed and shipped within
-				3–5 working days.
+				You'll receive an email confirmation shortly. Your poster will be
+				printed and shipped within 3–5 working days.
 			</p>
 			<a href="/" class="btn-home">Back to shop</a>
 		</div>
@@ -61,7 +61,7 @@
 	.poster-img {
 		width: 100%;
 		aspect-ratio: 1 / 1.414;
-		object-fit: contain;
+		object-fit: cover;
 		display: block;
 		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 		background: var(--bg);
@@ -104,7 +104,9 @@
 		font-size: 14px;
 		font-weight: 500;
 		color: var(--text);
-		transition: background 0.15s, color 0.15s;
+		transition:
+			background 0.15s,
+			color 0.15s;
 	}
 
 	.btn-home:hover {

@@ -7,5 +7,6 @@
   "price": 4500,
   "currency": "gbp",
   "gelatoProductUid": "poster_210x297_ver_4-0",
-  "available": true
+  "available": true,
+  "previewLetter": "R"
 }
